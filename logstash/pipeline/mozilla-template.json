@@ -1,0 +1,34 @@
+{
+  "index_patterns": ["mozilla-builds-*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "index.refresh_interval": "5s"
+    },
+    "mappings": {
+      "dynamic": "true",
+      "properties": {
+        "@timestamp": {"type": "date"},
+        "builder": {"type": "keyword"},
+        "slave": {"type": "keyword"},
+        "build_id": {"type": "keyword"},
+        "revision": {"type": "keyword"},
+        "build_uid": {"type": "keyword"},
+        "result_status": {"type": "keyword"},
+        "step_name": {"type": "keyword"},
+        "step_duration": {"type": "float"},
+        "step_result": {"type": "integer"},
+        "elapsed_time": {"type": "float"},
+        "exit_code": {"type": "integer"},
+        "test_suites": {"type": "keyword"},
+        "cancelled_by": {"type": "keyword"},
+        "cancellation_reason": {"type": "keyword"},
+        "location": {"type": "keyword"},
+        "log_source": {"type": "keyword"},
+        "start_timestamp": {"type": "float"},
+        "start_datetime": {"type": "date"}
+      }
+    }
+  }
+}

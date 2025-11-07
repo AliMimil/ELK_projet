@@ -1,0 +1,8 @@
+server.name: kibana
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+monitoring.ui.container.elasticsearch.enabled: true
+
+# Désactiver la sécurité pour le développement
+xpack.security.enabled: false
+xpack.fleet.enabled: false

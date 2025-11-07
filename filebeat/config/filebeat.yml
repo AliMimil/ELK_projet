@@ -1,0 +1,30 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - ../../data/raw_logs/*.txt
+  fields:
+    log_type: "mozilla-build"
+  fields_under_root: true
+  scan_frequency: 10s
+  close_inactive: 1h
+
+processors:
+  - add_fields:
+      target: ''
+      fields:
+        environment: 'development'
+        project: 'mozilla-build-analysis'
+
+output.logstash:
+  hosts: ["logstash:5044"]
+  bulk_max_size: 1024
+  timeout: 30
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
