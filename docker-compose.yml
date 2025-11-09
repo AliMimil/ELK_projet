@@ -30,7 +30,6 @@ services:
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./data/raw_logs:/usr/share/logstash/input_logs
       - ./logstash/patterns:/usr/share/logstash/patterns
     ports:
       - "5044:5044"
@@ -66,8 +65,11 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:8.11.0
     container_name: filebeat
+    environment:
+      - STRICT_PERMS=false
+    user: root
     volumes:
-      - ./filebeat/filebeat.yml:/usr/share/filebeat/config/filebeat.yml
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/config/filebeat.yml:ro
       - ./data/raw_logs:/usr/share/filebeat/input_logs:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock

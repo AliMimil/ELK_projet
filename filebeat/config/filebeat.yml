@@ -2,12 +2,20 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - ../../data/raw_logs/*.txt
+    - "/usr/share/filebeat/input_logs/*.txt"
   fields:
     log_type: "mozilla-build"
   fields_under_root: true
+  # CONFIGURATION CRITIQUE POUR FICHIERS ANCIENS :
+  ignore_older: 87600h
   scan_frequency: 10s
-  close_inactive: 1h
+  close_inactive: 2h
+  clean_inactive: 175200h
+  clean_removed: false
+  close_renamed: false
+  close_removed: false
+  # FORCER LA RE-LECTURE :
+  tail_files: false
 
 processors:
   - add_fields:
@@ -21,10 +29,5 @@ output.logstash:
   bulk_max_size: 1024
   timeout: 30
 
-logging.level: info
-logging.to_files: true
-logging.files:
-  path: /var/log/filebeat
-  name: filebeat
-  keepfiles: 7
-  permissions: 0644
+# Logs détaillés pour le débogage
+logging.level: debug
